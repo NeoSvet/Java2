@@ -13,6 +13,7 @@ public class Wall implements Exercise {
             entity.jump();
         } else {
             System.out.println(entity.getType() + " не справился.");
+            entity.setLose(true);
         }
     }
 

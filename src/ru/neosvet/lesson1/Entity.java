@@ -4,6 +4,7 @@ public class Entity {
     protected String type;
     protected int limit_distance;
     protected int limit_height;
+    protected boolean lose = false;
 
     public Entity(String type, int limit_distance, int limit_height) {
         this.type = type;
@@ -33,5 +34,13 @@ public class Entity {
 
     public String getType() {
         return type;
+    }
+
+    public void setLose(boolean lose) {
+        this.lose = lose;
+    }
+
+    public boolean isLose() {
+        return lose;
     }
 }

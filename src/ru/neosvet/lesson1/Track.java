@@ -13,6 +13,7 @@ public class Track implements Exercise {
             entity.run();
         } else {
             System.out.println(entity.getType() + " не справился.");
+            entity.setLose(true);
         }
     }
 
