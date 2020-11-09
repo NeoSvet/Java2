@@ -3,6 +3,6 @@ package ru.neosvet.lesson1;
 public class Cat extends Entity {
 
     public Cat() {
-        super("Кот");
+        super("Кот", 100, 4);
     }
 }

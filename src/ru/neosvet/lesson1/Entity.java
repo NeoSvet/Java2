@@ -2,16 +2,36 @@ package ru.neosvet.lesson1;
 
 public class Entity {
     protected String type;
+    protected int limit_distance;
+    protected int limit_height;
+
+    public Entity(String type, int limit_distance, int limit_height) {
+        this.type = type;
+        this.limit_distance = limit_distance;
+        this.limit_height = limit_height;
+    }
 
     public Entity(String type) {
         this.type = type;
     }
 
     public void run() {
-        System.out.println(type + " побежал.");
+        System.out.println(type + " пробежал.");
     }
 
     public void jump() {
-        System.out.println(type + " прыгнул.");
+        System.out.println(type + " перепрыгнул.");
+    }
+
+    public boolean canRun(int distance) {
+        return distance <= limit_distance;
+    }
+
+    public boolean canJump(int height) {
+        return height <= limit_height;
+    }
+
+    public String getType() {
+        return type;
     }
 }
