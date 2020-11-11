@@ -1,5 +1,9 @@
 package ru.neosvet.lesson1;
 
+import ru.neosvet.lesson1.entities.*;
+import ru.neosvet.lesson1.exercises.*;
+import ru.neosvet.lesson1.interfaces.*;
+
 import java.util.Random;
 
 public class Main {

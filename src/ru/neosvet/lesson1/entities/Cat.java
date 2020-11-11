@@ -1,18 +1,20 @@
-package ru.neosvet.lesson1;
+package ru.neosvet.lesson1.entities;
 
-public class Human implements Entity {
-    private final int LIMIT_DISTANCE = 2000;
-    private final int LIMIT_HEIGHT = 2;
+import ru.neosvet.lesson1.interfaces.Entity;
+
+public class Cat implements Entity {
+    private final int LIMIT_DISTANCE = 100;
+    private final int LIMIT_HEIGHT = 4;
     private boolean lose = false;
 
     @Override
     public void run() {
-        System.out.println("Человек пробежал.");
+        System.out.println("Кот пробежал.");
     }
 
     @Override
     public void jump() {
-        System.out.println("Человек перепрыгнул.");
+        System.out.println("Кот перепрыгнул.");
     }
 
     @Override
@@ -27,7 +29,7 @@ public class Human implements Entity {
 
     @Override
     public String getType() {
-        return "Человек";
+        return "Кот";
     }
 
     @Override

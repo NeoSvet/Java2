@@ -1,4 +1,7 @@
-package ru.neosvet.lesson1;
+package ru.neosvet.lesson1.exercises;
+
+import ru.neosvet.lesson1.interfaces.Entity;
+import ru.neosvet.lesson1.interfaces.Exercise;
 
 public class Wall implements Exercise {
     private int height;
