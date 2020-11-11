@@ -1,14 +1,6 @@
 package ru.neosvet.lesson1;
 
-public interface Entity {
-    void run();
-
-    void jump();
-
-    boolean canRun(int distance);
-
-    boolean canJump(int height);
-
+public interface Entity extends Runner, Jumper {
     String getType();
 
     void setLose(boolean lose);
