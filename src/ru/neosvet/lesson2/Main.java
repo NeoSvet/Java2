@@ -9,9 +9,29 @@ public class Main {
         String[][] array = getCorrectArray();
         printArray(array);
         checkSize(array);
-        array = getWrongSizeArray();
+        int sum = countSumArray(array);
+        System.out.println("Сумма массива: " + sum);
+        array = getWrongDataArray();
         printArray(array);
         checkSize(array);
+        sum = countSumArray(array);
+        System.out.println("Сумма массива: " + sum);
+    }
+
+    private static int countSumArray(String[][] array) {
+        int x = 0, y = 0;
+        try {
+            int sum = 0;
+            for (y = 0; y < array.length; y++) {
+                for (x = 0; x < array[y].length; x++) {
+                    sum += Integer.parseInt(array[y][x]);
+                }
+            }
+            return sum;
+        } catch (Exception e) {
+            System.out.println("MyArrayDataException on " + x + ":" + y);
+        }
+        return -1;
     }
 
     private static void checkSize(String[][] array) {
@@ -50,6 +70,15 @@ public class Main {
                 {"23", "19", "67", "7"},
                 {"29", "50", "3", "49"},
                 {"29", "50", "3", "49"}
+        };
+    }
+
+    private static String[][] getWrongDataArray() {
+        return new String[][]{
+                {"2", "5", "a", "34"},
+                {"57", "83", "8", "1"},
+                {"23", "b", "67", "7"},
+                {"29", "50", "3", "c"}
         };
     }
 }
