@@ -6,19 +6,19 @@ public class Main {
     private static final int SIZE = 4;
 
     public static void main(String[] args) {
-        String[][] array = getCorrectArray();
-        printArray(array);
-        checkSize(array);
-        int sum = countSumArray(array);
-        System.out.println("Сумма массива: " + sum);
-        array = getWrongDataArray();
-        printArray(array);
-        checkSize(array);
-        sum = countSumArray(array);
-        System.out.println("Сумма массива: " + sum);
+        try {
+            String[][] array = getCorrectArray(); //or getWrongSizeArray() or getWrongDataArray()
+            printArray(array);
+            checkSize(array);
+            System.out.println("Сумма массива: " + countSumArray(array));
+        } catch (MyArraySizeException exSize) {
+            exSize.printStackTrace();
+        } catch (MyArrayDataException exData) {
+            exData.printStackTrace();
+        }
     }
 
-    private static int countSumArray(String[][] array) {
+    private static int countSumArray(String[][] array) throws MyArrayDataException {
         int x = 0, y = 0;
         try {
             int sum = 0;
@@ -29,20 +29,17 @@ public class Main {
             }
             return sum;
         } catch (Exception e) {
-            System.out.println("MyArrayDataException on " + x + ":" + y);
+            throw new MyArrayDataException(x, y);
         }
-        return -1;
     }
 
-    private static void checkSize(String[][] array) {
+    private static void checkSize(String[][] array) throws MyArraySizeException {
         if (array.length != SIZE) {
-            System.out.println("MyArraySizeException");
-            return;
+            throw new MyArraySizeException();
         }
         for (int i = 0; i < array.length; i++) {
             if (array[i].length != SIZE) {
-                System.out.println("MyArraySizeException");
-                return;
+                throw new MyArraySizeException();
             }
         }
     }
