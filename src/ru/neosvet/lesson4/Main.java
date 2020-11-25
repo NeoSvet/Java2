@@ -20,4 +20,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public static void ready(Controller controller) {
+        controller.addUser("User1");
+        controller.addUser("User2");
+        controller.addUser("User3");
+    }
 }
