@@ -6,7 +6,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Controller {
+    private static final String TIME_FORMAT = "[HH:mm:ss]";
     @FXML
     private TextField tfMessage;
     @FXML
@@ -33,7 +37,11 @@ public class Controller {
     }
 
     private void putMessage(String msg) {
-        taChat.setText(taChat.getText() + "<" + userName + ">" + msg + "\n");
+        taChat.setText(taChat.getText() + getTime() + "<" + userName + ">" + msg + "\n");
+    }
+
+    private String getTime() {
+        return new SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().getTime());
     }
 
     public void addUser(String name) {
