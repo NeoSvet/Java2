@@ -28,25 +28,20 @@
         </SplitPane>
     </center>
     <bottom>
-        <SplitPane dividerPositions="0.755" prefHeight="40.0" prefWidth="150.0"
-                   BorderPane.alignment="CENTER">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="520.0">
+        <BorderPane>
+            <center>
                 <TextField fx:id="tfMessage" onAction="#sendMessage"
                            prefHeight="38.0" prefWidth="450.0"
-                           promptText="Type a message"
-                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           promptText="Type a message">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="18.0"/>
                     </font>
                 </TextField>
-            </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="38.0" prefWidth="150.0">
-                <Button layoutX="0.0" mnemonicParsing="false" onAction="#sendMessage"
-                        prefHeight="38.0" prefWidth="150.0" text="Send"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            </AnchorPane>
-        </SplitPane>
+            </center>
+            <right>
+                <Button mnemonicParsing="false" onAction="#sendMessage"
+                        prefHeight="38.0" prefWidth="150.0" text="Send"/>
+            </right>
+        </BorderPane>
     </bottom>
 </BorderPane>
