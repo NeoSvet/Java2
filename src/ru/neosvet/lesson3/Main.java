@@ -1,6 +1,7 @@
 package ru.neosvet.lesson3;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -42,16 +43,22 @@ public class Main {
         String[] words = new String[]{
                 "apple", "orange", "pineapple", "mango",
                 "cherry", "currant", "raspberry",
-                "apple", "orange", "pineapple", "mango",
-                "cherry", "currant", "raspberry"
+                "apple", "orange", "banana", "melon",
+                "watermelon", "pineapple", "apple"
         };
 
-        HashSet<String> hash = new HashSet<>();
+        HashMap<String, Integer> hash = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
-            hash.add(words[i]);
+            if (hash.containsKey(words[i]))
+                hash.replace(words[i], hash.get(words[i]) + 1);
+            else
+                hash.put(words[i], 1);
         }
 
         System.out.println("Array length: " + words.length);
         System.out.println("Word count: " + hash.size());
+        for (Map.Entry<String, Integer> item : hash.entrySet()) {
+            System.out.println(item.getKey() + ": " + item.getValue());
+        }
     }
 }
