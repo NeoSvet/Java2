@@ -14,6 +14,8 @@ public class Controller {
     @FXML
     private ListView lvUsers;
 
+    private String userName = "noname";
+
     @FXML
     public void initialize() {
         Main.ready(this);
@@ -27,7 +29,11 @@ public class Controller {
         tfMessage.clear();
         if (s.isEmpty())
             return;
-        taChat.setText(taChat.getText() + s + "\n");
+        putMessage(s);
+    }
+
+    private void putMessage(String msg) {
+        taChat.setText(taChat.getText() + "<" + userName + ">" + msg + "\n");
     }
 
     public void addUser(String name) {
