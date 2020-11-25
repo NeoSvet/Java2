@@ -28,13 +28,9 @@ public class Main {
             book.add(names[i], phones[i]);
         }
 
-        System.out.println("Phones for " + names[2] + ":");
-        System.out.print(book.get(names[2]));
-        System.out.println("Phones for " + names[3] + ":");
-        System.out.print(book.get(names[3]));
-        System.out.println("Phones for Jonh:");
-        System.out.print(book.get("Jonh"));
-
+        System.out.print(book.getListPhones(names[2]));
+        System.out.print(book.getListPhones(names[3]));
+        System.out.print(book.getListPhones("Jonh"));
     }
 
     private static void task1() {
