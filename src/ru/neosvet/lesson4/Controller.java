@@ -1,5 +1,7 @@
 package ru.neosvet.lesson4;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -23,6 +25,16 @@ public class Controller {
     @FXML
     public void initialize() {
         Main.ready(this);
+        initEventSelectUser();
+    }
+
+    private void initEventSelectUser() {
+        lvUsers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                userName = newValue;
+            }
+        });
     }
 
     @FXML
