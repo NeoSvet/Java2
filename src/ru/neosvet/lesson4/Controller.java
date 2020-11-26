@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Controller {
-    private static final String TIME_FORMAT = "[HH:mm:ss]";
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("[HH:mm:ss]");
     @FXML
     private TextField tfMessage;
     @FXML
@@ -53,7 +53,7 @@ public class Controller {
     }
 
     private String getTime() {
-        return new SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().getTime());
+        return timeFormat.format(Calendar.getInstance().getTime());
     }
 
     public void addUser(String name) {
