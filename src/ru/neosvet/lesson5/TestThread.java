@@ -40,7 +40,7 @@ public class TestThread {
     public void oneThread() {
         Arrays.fill(arr, 1f);
         Thread thread = new Thread(() -> {
-            System.out.println("OneThread is started... ");
+            System.out.print("OneThread is started... ");
             long start_time = System.currentTimeMillis();
             for (int i = 0; i < arr.length; i++) {
                 arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) *
@@ -55,7 +55,7 @@ public class TestThread {
     public void multiThread(int k) {
         thread_stopped = 0;
         Arrays.fill(arr, 1f);
-        System.out.println(k + " threads is started... ");
+        System.out.print(k + " threads is started... ");
         start_time = System.currentTimeMillis();
         thread_max = k;
         length_part = SIZE / k;
