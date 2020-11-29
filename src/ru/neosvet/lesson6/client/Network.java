@@ -58,7 +58,7 @@ public class Network {
     public void sendMessage(String msg) throws Exception {
         if(!connected) {
             try {
-                Client.getInstance().appendMessage("No connection to server");
+                Client.getInstance().appendMessage("Message not sent: no connection");
             } catch (Exception e) {
                 e.printStackTrace();
             }
