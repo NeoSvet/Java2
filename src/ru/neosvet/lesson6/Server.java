@@ -17,28 +17,25 @@ public class Server {
     public void start(int port) {
         Thread thread = new Thread(() -> {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
-                System.out.println("Ожидание подключения...");
+                System.out.println("Waiting for connection...");
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Соединение установлено!");
+                System.out.println("Connection established!");
 
                 DataInputStream in = new DataInputStream(clientSocket.getInputStream());
                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
                 while (true) {
                     String message = in.readUTF();
-                    System.out.println("Сообщение пользователя: " + message);
-
+                    System.out.println("Received message: " + message);
                     if (message.equals("/exit")) {
                         break;
                     }
-
-                    out.writeUTF(message.toUpperCase());
                 }
 
-                System.out.println("Сервер остановлен");
+                System.out.println("Server stopped");
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Порт уже занят");
+                System.out.println("Port already busy");
             }
         });
         thread.start();
