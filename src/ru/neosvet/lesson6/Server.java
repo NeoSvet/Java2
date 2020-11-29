@@ -21,18 +21,21 @@ public class Server {
     private void chat() {
         try {
             Scanner scan = new Scanner(System.in);
-            do {
+            while (true) {
                 String s = scan.next();
                 if (s.equals("/stop")) {
                     out.writeUTF(s);
+                    out.flush();
                     connected = false;
                     System.out.println("Server stopped");
-                } else {
+                    System.exit(0);
+                } else if (connected) {
                     out.writeUTF("<Server>" + s);
+                    out.flush();
+                } else {
+                    System.out.println("Message not sent: no connection");
                 }
-                out.flush();
-            } while (connected);
-            System.exit(0);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
