@@ -28,13 +28,13 @@ public class Server {
                 DataInputStream in = new DataInputStream(clientSocket.getInputStream());
                 out = new DataOutputStream(clientSocket.getOutputStream());
 
-                while (true) {
+                while (connected) {
                     String message = in.readUTF();
                     System.out.println("Received message: " + message);
                     if (message.indexOf("/exit") == message.indexOf(">") + 1) {
+                        connected = false;
                         out.writeUTF("/stop");
                         out.flush();
-                        break;
                     }
                 }
 
@@ -43,18 +43,23 @@ public class Server {
                 e.printStackTrace();
                 System.out.println("Port already busy");
             }
+
+            System.exit(0);
         });
         thread.start();
         try {
             Scanner scan = new Scanner(System.in);
             do {
                 String s = scan.next();
-                if (s.equals("/stop"))
+                if (s.equals("/stop")) {
                     out.writeUTF(s);
-                else
+                    connected = false;
+                } else {
                     out.writeUTF("<Server>" + s);
+                }
                 out.flush();
             } while (connected);
+            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
