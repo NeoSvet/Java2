@@ -52,9 +52,9 @@ public class ViewController {
             return;
         msg = "<" + userName + ">" + msg;
         try {
+            putMessage(msg);
             client.sendMessage(msg);
             tfMessage.clear();
-            putMessage(msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
