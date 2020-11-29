@@ -15,6 +15,27 @@ public class Server {
     public static void main(String[] args) {
         Server server = new Server();
         server.start(PORT);
+        server.chat();
+    }
+
+    private void chat() {
+        try {
+            Scanner scan = new Scanner(System.in);
+            do {
+                String s = scan.next();
+                if (s.equals("/stop")) {
+                    out.writeUTF(s);
+                    connected = false;
+                    System.out.println("Server stopped");
+                } else {
+                    out.writeUTF("<Server>" + s);
+                }
+                out.flush();
+            } while (connected);
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void start(int port) {
@@ -37,31 +58,14 @@ public class Server {
                         out.flush();
                     }
                 }
-
-                System.out.println("Server stopped");
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Port already busy");
+                return;
             }
 
             start(PORT);
         });
         thread.start();
-        try {
-            Scanner scan = new Scanner(System.in);
-            do {
-                String s = scan.next();
-                if (s.equals("/stop")) {
-                    out.writeUTF(s);
-                    connected = false;
-                } else {
-                    out.writeUTF("<Server>" + s);
-                }
-                out.flush();
-            } while (connected);
-            System.exit(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
