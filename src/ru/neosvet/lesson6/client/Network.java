@@ -18,13 +18,16 @@ public class Network {
         connected = true;
     }
 
-    public void close() {
+    public void close(String nick) {
+        if (!connected)
+            return;
         try {
-            if (connected)
-                socket.close();
+            out.writeUTF("<" + nick + ">/exit");
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void waitMessage() {

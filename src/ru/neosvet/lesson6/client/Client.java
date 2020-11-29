@@ -34,7 +34,7 @@ public class Client extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
-        primaryStage.setOnCloseRequest(windowEvent -> network.close());
+        primaryStage.setOnCloseRequest(windowEvent -> network.close(viewer.getNick()));
     }
 
     public void ready(ViewController controller) {
