@@ -5,9 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
     public static final int PORT = 8189;
+    private static DataOutputStream out;
+    private boolean connected = false;
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -20,9 +23,10 @@ public class Server {
                 System.out.println("Waiting for connection...");
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Connection established!");
+                connected = true;
 
                 DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+                out = new DataOutputStream(clientSocket.getOutputStream());
 
                 while (true) {
                     String message = in.readUTF();
@@ -41,5 +45,18 @@ public class Server {
             }
         });
         thread.start();
+        try {
+            Scanner scan = new Scanner(System.in);
+            do {
+                String s = scan.next();
+                if (s.equals("/stop"))
+                    out.writeUTF(s);
+                else
+                    out.writeUTF("<Server>" + s);
+                out.flush();
+            } while (connected);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
