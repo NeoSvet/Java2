@@ -44,7 +44,7 @@ public class Server {
                 System.out.println("Port already busy");
             }
 
-            System.exit(0);
+            start(PORT);
         });
         thread.start();
         try {

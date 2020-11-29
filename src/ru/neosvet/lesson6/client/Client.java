@@ -63,6 +63,10 @@ public class Client extends Application {
     }
 
     public void sendMessage(String msg) {
+        if(msg.equals("/connect")) {
+            connect(HOST, Server.PORT);
+            return;
+        }
         try {
             network.sendMessage(msg);
         } catch (Exception e) {

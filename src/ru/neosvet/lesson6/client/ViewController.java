@@ -50,6 +50,11 @@ public class ViewController {
         String msg = tfMessage.getText().trim();
         if (msg.isEmpty())
             return;
+        if (msg.equals("/connect")) {
+            client.sendMessage(msg);
+            tfMessage.clear();
+            return;
+        }
         msg = "<" + userName + ">" + msg;
         try {
             putMessage(msg);
