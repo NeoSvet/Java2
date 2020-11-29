@@ -20,7 +20,8 @@ public class Network {
 
     public void close() {
         try {
-            socket.close();
+            if (connected)
+                socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +57,7 @@ public class Network {
     }
 
     public void sendMessage(String msg) throws Exception {
-        if(!connected) {
+        if (!connected) {
             try {
                 Client.getInstance().appendMessage("Message not sent: no connection");
             } catch (Exception e) {
