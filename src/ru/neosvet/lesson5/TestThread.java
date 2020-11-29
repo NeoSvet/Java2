@@ -6,13 +6,11 @@ import java.util.List;
 
 public class TestThread {
     private static final int SIZE = 10000000;
-    private static final int HALF_SIZE = SIZE / 2;
-    private static final int THREAD_MAX = 2;
     private float[] arr = new float[SIZE];
-    private float[] arr1, arr2;
-    private int thread_stopped = 0;
+    private int thread_stopped = 0, thread_max;
     private long start_time;
-    private int total_time;
+    private int total_time, length_part;
+    private List<float[]> arrList = new ArrayList<>();
     private List<Thread> thrList = new ArrayList<>();
 
     public void waitFinish() {
@@ -24,6 +22,7 @@ public class TestThread {
             e.printStackTrace();
         }
         thrList.clear();
+        arrList.clear();
     }
 
     public int getTotalTime() {
@@ -41,7 +40,7 @@ public class TestThread {
     public void oneThread() {
         Arrays.fill(arr, 1f);
         Thread thread = new Thread(() -> {
-            System.out.println("OneThread is started...");
+            System.out.println("OneThread is started... ");
             long start_time = System.currentTimeMillis();
             for (int i = 0; i < arr.length; i++) {
                 arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) *
@@ -53,15 +52,20 @@ public class TestThread {
         thrList.add(thread);
     }
 
-    public void twoThread() {
-        Arrays.fill(arr, 1f);
+    public void multiThread(int k) {
         thread_stopped = 0;
-        System.out.println("TwoThread is started...");
+        Arrays.fill(arr, 1f);
+        System.out.println(k + " threads is started... ");
         start_time = System.currentTimeMillis();
-        arr1 = Arrays.copyOfRange(arr, 0, HALF_SIZE);
-        startThread(arr1, 0);
-        arr2 = Arrays.copyOfRange(arr, HALF_SIZE, SIZE);
-        startThread(arr2, HALF_SIZE);
+        thread_max = k;
+        length_part = SIZE / k;
+        int remainder = SIZE - length_part * k;
+        int n = 0;
+        for (int i = 0; i < k - 1; i++) {
+            startThread(Arrays.copyOfRange(arr, n, n + length_part), n);
+            n += length_part;
+        }
+        startThread(Arrays.copyOfRange(arr, n, n + length_part + remainder), n);
     }
 
     private void startThread(float[] arr, int offset) {
@@ -72,8 +76,9 @@ public class TestThread {
                 arr[i] = (float) (arr[i] * Math.sin(0.2f + n / 5) *
                         Math.cos(0.2f + n / 5) * Math.cos(0.4f + n / 2));
             }
+            arrList.add(arr);
             thread_stopped++;
-            if (thread_stopped == THREAD_MAX) {
+            if (thread_stopped == thread_max) {
                 glueArrs();
                 total_time = (int) (System.currentTimeMillis() - start_time);
             }
@@ -83,7 +88,9 @@ public class TestThread {
     }
 
     private void glueArrs() {
-        System.arraycopy(arr1, 0, arr, 0, HALF_SIZE);
-        System.arraycopy(arr2, 0, arr, HALF_SIZE, HALF_SIZE);
+        for (int i = 0; i < arrList.size(); i++) {
+            float[] a = arrList.get(i);
+            System.arraycopy(a, 0, arr, i * length_part, a.length);
+        }
     }
 }
