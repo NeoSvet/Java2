@@ -38,7 +38,7 @@ public class ViewController {
         lvUsers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                userName = newValue;
+
             }
         });
     }
@@ -50,6 +50,12 @@ public class ViewController {
         String msg = tfMessage.getText().trim();
         if (msg.isEmpty())
             return;
+        if (msg.indexOf("/nick") == 0) {
+            userName = msg.substring(msg.indexOf(" ") + 1);
+            putMessage("Changed nick to " + userName);
+            tfMessage.clear();
+            return;
+        }
         if (msg.equals("/connect")) {
             client.sendMessage(msg);
             tfMessage.clear();
