@@ -27,7 +27,9 @@ public class Server {
                 while (true) {
                     String message = in.readUTF();
                     System.out.println("Received message: " + message);
-                    if (message.equals("/exit")) {
+                    if (message.indexOf("/exit") == message.indexOf(">") + 1) {
+                        out.writeUTF("/stop");
+                        out.flush();
                         break;
                     }
                 }

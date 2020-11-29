@@ -9,11 +9,13 @@ public class Network {
     private DataInputStream in;
     private DataOutputStream out;
     private Socket socket;
+    private boolean connected = false;
 
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
+        connected = true;
     }
 
     public void close() {
@@ -36,6 +38,11 @@ public class Network {
             try {
                 while (true) {
                     String message = in.readUTF();
+                    if (message.equals("/stop")) {
+                        connected = false;
+                        client.stopConnection();
+                        return;
+                    }
                     client.appendMessage(message);
                 }
             } catch (IOException e) {
@@ -49,6 +56,14 @@ public class Network {
     }
 
     public void sendMessage(String msg) throws Exception {
+        if(!connected) {
+            try {
+                Client.getInstance().appendMessage("No connection to server");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         out.writeUTF(msg);
     }
 }

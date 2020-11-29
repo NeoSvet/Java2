@@ -70,4 +70,8 @@ public class Client extends Application {
             appendErrorMessage(e.getMessage());
         }
     }
+
+    public void stopConnection() {
+        viewer.putMessage("Connection interrupted");
+    }
 }
