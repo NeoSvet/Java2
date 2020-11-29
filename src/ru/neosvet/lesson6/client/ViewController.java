@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Controller {
+public class ViewController {
     private SimpleDateFormat timeFormat = new SimpleDateFormat("[HH:mm:ss]");
     @FXML
     private TextField tfMessage;
@@ -21,11 +21,17 @@ public class Controller {
     private ListView lvUsers;
 
     private String userName = "noname";
+    private Client client;
 
     @FXML
     public void initialize() {
-        Client.getInstance().ready(this);
         initEventSelectUser();
+        try {
+            client = Client.getInstance();
+            client.ready(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initEventSelectUser() {
@@ -41,15 +47,24 @@ public class Controller {
     public void sendMessage(ActionEvent actionEvent) {
         if (tfMessage.getText().isEmpty())
             return;
-        String s = tfMessage.getText().trim();
-        tfMessage.clear();
-        if (s.isEmpty())
+        String msg = tfMessage.getText().trim();
+        if (msg.isEmpty())
             return;
-        putMessage(s);
+        msg = "<" + userName + ">" + msg;
+        try {
+            client.sendMessage(msg);
+            tfMessage.clear();
+            putMessage(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void putMessage(String msg) {
-        taChat.setText(taChat.getText() + getTime() + "<" + userName + ">" + msg + "\n");
+    public void putMessage(String msg) {
+        if (taChat.getText().isEmpty())
+            taChat.setText(getTime() + msg + "\n");
+        else
+            taChat.setText(taChat.getText() + getTime() + msg + "\n");
     }
 
     private String getTime() {
