@@ -20,7 +20,7 @@ public class ViewController {
     @FXML
     private ListView lvUsers;
 
-    private String userName = "noname";
+    private String nick = "noname";
     private Client client;
 
     @FXML
@@ -51,8 +51,8 @@ public class ViewController {
         if (msg.isEmpty())
             return;
         if (msg.indexOf("/nick") == 0) {
-            userName = msg.substring(msg.indexOf(" ") + 1);
-            putMessage("Changed nick to " + userName);
+            nick = msg.substring(msg.indexOf(" ") + 1);
+            putMessage("Changed nick to " + nick);
             tfMessage.clear();
             return;
         }
@@ -61,7 +61,7 @@ public class ViewController {
             tfMessage.clear();
             return;
         }
-        msg = "<" + userName + ">" + msg;
+        msg = "<" + nick + ">" + msg;
         try {
             putMessage(msg);
             client.sendMessage(msg);
@@ -84,5 +84,9 @@ public class ViewController {
 
     public void addUser(String name) {
         lvUsers.getItems().add(name);
+    }
+
+    public String getNick() {
+        return nick;
     }
 }
