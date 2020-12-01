@@ -9,7 +9,12 @@ public class Network {
     private DataInputStream in;
     private DataOutputStream out;
     private Socket socket;
+    private ViewController viewer;
     private boolean connected = false;
+
+    public Network(ViewController viewer) {
+        this.viewer = viewer;
+    }
 
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
@@ -32,26 +37,19 @@ public class Network {
 
     public void waitMessage() {
         Thread thread = new Thread(() -> {
-            Client client = null;
-            try {
-                client = Client.getInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
             try {
                 while (true) {
                     String message = in.readUTF();
                     if (message.equals("/stop")) {
                         connected = false;
-                        client.stopConnection();
+                        viewer.showMessage("Connection interrupted");
                         return;
                     }
-                    client.appendMessage(message);
+                    viewer.showMessage(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                client.appendErrorMessage(e.getMessage());
+                viewer.showErrorMessage(e.getMessage());
             }
 
         });
@@ -62,7 +60,7 @@ public class Network {
     public void sendMessage(String msg) throws Exception {
         if (!connected) {
             try {
-                Client.getInstance().appendMessage("Message not sent: no connection");
+                viewer.showMessage("Message not sent: no connection");
             } catch (Exception e) {
                 e.printStackTrace();
             }

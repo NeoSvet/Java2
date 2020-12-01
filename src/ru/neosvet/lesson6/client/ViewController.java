@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import ru.neosvet.lesson6.Server;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -21,17 +23,12 @@ public class ViewController {
     private ListView lvUsers;
 
     private String nick = "noname";
-    private Client client;
+    private Network network;
 
     @FXML
     public void initialize() {
         initEventSelectUser();
-        try {
-            client = Client.getInstance();
-            client.ready(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connect(Client.HOST, Server.PORT);
     }
 
     private void initEventSelectUser() {
@@ -52,26 +49,26 @@ public class ViewController {
             return;
         if (msg.indexOf("/nick") == 0) {
             nick = msg.substring(msg.indexOf(" ") + 1);
-            putMessage("Changed nick to " + nick);
+            showMessage("Changed nick to " + nick);
             tfMessage.clear();
             return;
         }
         if (msg.equals("/connect")) {
-            client.sendMessage(msg);
+            sendMessage(msg);
             tfMessage.clear();
             return;
         }
         msg = "<" + nick + ">" + msg;
         try {
-            putMessage(msg);
-            client.sendMessage(msg);
+            showMessage(msg);
+            sendMessage(msg);
             tfMessage.clear();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void putMessage(String msg) {
+    public void showMessage(String msg) {
         if (taChat.getText().isEmpty())
             taChat.setText(getTime() + msg + "\n");
         else
@@ -88,5 +85,38 @@ public class ViewController {
 
     public String getNick() {
         return nick;
+    }
+
+    public void close() {
+        network.close(nick);
+    }
+
+    public void connect(String localhost, int port) {
+        network = new Network(this);
+        try {
+            network.connect(localhost, port);
+            showMessage("Connection to server successful");
+            network.waitMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showMessage("Connection to server failed: " + e.getMessage());
+        }
+    }
+
+    private void sendMessage(String msg) {
+        if(msg.equals("/connect")) {
+            connect(Client.HOST, Server.PORT);
+            return;
+        }
+        try {
+            network.sendMessage(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorMessage(e.getMessage());
+        }
+    }
+
+    public void showErrorMessage(String msg) {
+        showMessage("Error: " + msg);
     }
 }
