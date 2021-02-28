@@ -1,1 +1,2 @@
 *.class
+/out/production/Java2/ru/neosvet/*/*.fxml
